@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: weave-net-rmpeers
+  namespace: kube-system
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: weave-net-rmpeers
+    spec:
+      containers:
+      - name: rmpeers
+        image: caarlos0/rmpeers
+        resources:
+          requests:
+            cpu: "0.01"
+            memory: "20Mi"
+          limits:
+            cpu: "0.1"
+            memory: "20Mi"
+      hostNetwork: true
